@@ -5,7 +5,7 @@
     />
     <!-- Seccion de todos -->
     <section>
-        <div>
+        <div class="form">
             <Todo 
                 v-if="!isLoading"
                 v-for="todo in todos" 
@@ -48,6 +48,10 @@ async function removeTodo(id) {
 </script>
 
 <style scoped>
+.form{
+    display: flex;
+    flex-direction: column;
+}
 .spinner{
     margin-left: 80px;
     margin-top: 80px;
