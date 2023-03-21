@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
 import { useBackgroundColor, backgroundColorProps } from '../composables/backgroundColor';
 
 const props = defineProps({

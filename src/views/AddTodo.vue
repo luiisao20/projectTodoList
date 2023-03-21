@@ -1,64 +1,52 @@
 <template>
-    <div class="form">
-        <h1>Add Todo</h1>
-        <form class="addTodo">
-            <label for="">Todo title</label>
-            <input v-model="title" type="text" placeholder="Todo Title">
-            <label for="">Todo Description</label>
-            <input v-model="descr" type="text" placeholder="Todo Description">
-            <label for="">Todo Date</label>
-            <input v-model="date" type="date" min="2019-01-01" max="2023-03-20">
-            <div class="button">
-                <button
-                    @click.prevent="submitTodo"
-                    variant="secondary"
-                >
-                <i class="fa-sharp fa-solid fa-circle-check" style="color: white;"></i>
-            </button>
-            </div>
-        </form>
-    </div>
+    <Alert 
+        v-bind="alert" 
+        @close="alert.show = false" 
+    />
+    <Form
+        v-model:title="todo.title"
+        v-model:description="todo.description"
+        v-model:date="todo.date"
+        @submit="submitTodo"
+    />
 </template>
 <script setup>
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import axios from 'axios';
+import Alert from '../components/Alert.vue';
+import { useAlert } from '../composables/alert.js';
+import { useRouter } from 'vue-router';
+import Form from '../components/Form.vue';
 
-const title = ref('');
-const descr = ref('');
-const date = ref('');
+const todo = reactive({
+    title: '',
+    description: '',
+    date: ''
+})
+
+const { alert, showAlert } = useAlert()
+const router = useRouter();
 
 async function submitTodo() {
-    const res = await axios.post('/api/todos', {
-        title: title.value,
-        description: descr.value,
-        date: date.value
-    })
+    console.log();
+
+    if(todo.title === '' || todo.description === '' || todo.date == ''){
+        showAlert('Todos los campos son necesarios', {variant:'warning'})
+        return
+    }
+    try{
+        const res = await axios.post('/api/todos', {
+        title: todo.title,
+        description: todo.description,
+        date: todo.date
+        });
+        router.push('/')    
+    } catch {
+        showAlert('La base de datos no está disponible...')
+    }
+
 }
 
 </script>
 <style scoped>
-.form{
-    background-color: var(--navbar-color);
-    padding: 20px;
-    border-radius: 40px;
-}
-.addTodo {
-    display: flex;
-    flex-direction: column;
-    font-size: 20px;
-}
-input {
-    margin-bottom: 20px;
-    padding: 10px;
-    border-radius: 10px;
-}
-button{
-    background-color: var(--navbar-color);
-}
-.button{
-    text-align: end;
-}
-.fa-sharp{
-    font-size: 40px;
-}
 </style>

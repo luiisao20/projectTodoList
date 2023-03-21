@@ -5,6 +5,7 @@ function useBackgroundColor(props){
         const options = {
             danger: 'var(--danger-color)',
             info: 'var(--info-color)',
+            warning: 'var(--warning-color)',
             success: 'var(--accent-color)',
             secondary: 'var(--navbar-color)',
         }

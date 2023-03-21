@@ -22,20 +22,16 @@
 <script setup>
 import Alert from '../components/Alert.vue';
 import Todo from '../components/Todo.vue'
-import { reactive } from 'vue';
 import '@fortawesome/fontawesome-free/css/all.css';
 import { useFetch } from '../composables/fetch.js';
+import { useAlert } from '../composables/alert.js';
+import axios from 'axios';
 
-const alert = reactive({
-    show: false,
-    message: 'Ola k ase',
-    variant: 'info'
-})
+const { alert, showAlert } = useAlert();
 
 const { data: todos, isLoading } = useFetch('/api/todos', {
     onError: () => {
-        console.log('hola');
-        alert.show = true
+        showAlert('La base de datos está caída :(')
     }
 })
 
@@ -43,7 +39,9 @@ function editTodo(id) {
     console.log(id);
 }
 
-function removeTodo(id) {
-    console.log(id);
+async function removeTodo(id) {
+    await axios.delete(`/api/todos/${id}`);
+    todos.value = todos.value.filter((todo) => todo.id !== id)
 }
+
 </script>
