@@ -8,10 +8,11 @@
         v-model:description="todo.description"
         v-model:date="todo.date"
         @submit="submitTodo"
+        :isLoading="isPostingTodo"
     />
 </template>
 <script setup>
-import { reactive } from 'vue';
+import { ref, reactive } from 'vue';
 import axios from 'axios';
 import Alert from '../components/Alert.vue';
 import { useAlert } from '../composables/alert.js';
@@ -23,6 +24,7 @@ const todo = reactive({
     description: '',
     date: ''
 })
+const isPostingTodo = ref(false)
 
 const { alert, showAlert } = useAlert()
 const router = useRouter();
@@ -33,12 +35,16 @@ async function submitTodo() {
         showAlert('Todos los campos son necesarios', {variant:'warning'})
         return
     }
+
+    isPostingTodo.value = true
+
     try{
         const res = await axios.post('/api/todos', {
         title: todo.title,
         description: todo.description,
         date: todo.date
         });
+        isPostingTodo.value = false
         router.push('/')    
     } catch {
         showAlert('La base de datos no está disponible...')

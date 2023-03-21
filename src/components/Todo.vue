@@ -68,4 +68,7 @@ button i {
     font-size: 30px;
     color: white;
 }
+.fa-eraser{
+    color: var(--danger-color);
+}
 </style>

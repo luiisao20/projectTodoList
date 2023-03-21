@@ -7,6 +7,7 @@
     <section>
         <div>
             <Todo 
+                v-if="!isLoading"
                 v-for="todo in todos" 
                 :title="todo.title" 
                 :date="todo.date" 
@@ -14,8 +15,11 @@
                 @remove="removeTodo(todo.id)" 
                 @edit="$router.push(`/todos/${todo.id}/edit`)" 
             />
+            <Spinner 
+                v-else
+                class="spinner"
+            />
         </div>
-
     </section>
 </template>
 
@@ -26,7 +30,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import { useFetch } from '../composables/fetch.js';
 import { useAlert } from '../composables/alert.js';
 import axios from 'axios';
-import { router } from '../routes';
+import Spinner from '../components/Spinner.vue';
 
 const { alert, showAlert } = useAlert();
 
@@ -42,3 +46,10 @@ async function removeTodo(id) {
 }
 
 </script>
+
+<style scoped>
+.spinner{
+    margin-left: 80px;
+    margin-top: 80px;
+}
+</style>

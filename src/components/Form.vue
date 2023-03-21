@@ -21,7 +21,8 @@
                 <button 
                     @click.prevent="submit"
                 >
-                    <i class="fa-sharp fa-solid fa-circle-check" style="color: white;"></i>
+                    <Spinner v-if="isLoading"/>
+                    <i v-else class="fa-sharp fa-solid fa-circle-check" style="color: white;"></i>
                 </button>
             </div>
         </form>
@@ -29,6 +30,8 @@
 </template>
 
 <script setup>
+import Spinner from './Spinner.vue';
+
 defineProps({
     title:{
         required: true,
@@ -41,6 +44,10 @@ defineProps({
     date:{
         required: true,
         type: String
+    },
+    isLoading: {
+        default: false,
+        type: Boolean
     }
 });
 
