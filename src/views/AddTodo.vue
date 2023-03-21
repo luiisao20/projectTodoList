@@ -28,7 +28,6 @@ const { alert, showAlert } = useAlert()
 const router = useRouter();
 
 async function submitTodo() {
-    console.log();
 
     if(todo.title === '' || todo.description === '' || todo.date == ''){
         showAlert('Todos los campos son necesarios', {variant:'warning'})

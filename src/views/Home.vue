@@ -12,7 +12,7 @@
                 :date="todo.date" 
                 :description="todo.description"
                 @remove="removeTodo(todo.id)" 
-                @edit="editTodo(todo.id)" 
+                @edit="$router.push(`/todos/${todo.id}/edit`)" 
             />
         </div>
 
@@ -26,6 +26,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import { useFetch } from '../composables/fetch.js';
 import { useAlert } from '../composables/alert.js';
 import axios from 'axios';
+import { router } from '../routes';
 
 const { alert, showAlert } = useAlert();
 
@@ -34,10 +35,6 @@ const { data: todos, isLoading } = useFetch('/api/todos', {
         showAlert('La base de datos está caída :(')
     }
 })
-
-function editTodo(id) {
-    console.log(id);
-}
 
 async function removeTodo(id) {
     await axios.delete(`/api/todos/${id}`);
