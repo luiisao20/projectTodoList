@@ -1,0 +1,22 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "Tomar algo",
+      "date": "20-03-2023",
+      "description": "Tomar cervectia jeje"
+    },
+    {
+      "id": 2,
+      "title": "Ver pelicula",
+      "date": "21-03-2023",
+      "description": "Ver mujercitas"
+    },
+    {
+      "title": "awdawd",
+      "description": "adawd",
+      "date": "2023-02-28",
+      "id": 3
+    }
+  ]
+}
